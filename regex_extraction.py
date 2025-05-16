@@ -1,23 +1,23 @@
 import re
 
-text = """
-Here are some emails: user@example.com, firstname.lastname@company.co.uk.
-Some URLs: https://www.example.com, https://subdomain.example.org/page.
-Phone numbers: (123) 456-7890, 123-456-7890, 123.456.7890.
-Credit cards: 1234 5678 9012 3456, 1234-5678-9012-3456.
-"""
+# Regex patterns
+email_pattern = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+phone_pattern = r'^(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})$'
+url_pattern = r'^https?:\/\/[^\s/$.?#].[^\s]*$'
 
-email_regex = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
-url_regex = r'https?://[a-zA-Z0-9.-]+(?:\.[a-zA-Z]{2,})(?:/[^\s]*)?'
-phone_regex = r'(\(\d{3}\)\s?\d{3}[-.]\d{4}|\d{3}[-.]\d{3}[-.]\d{4})'
-credit_card_regex = r'\b(?:\d{4}[- ]?){3}\d{4}\b'
+# Function to validate input with a regex
+def get_valid_input(prompt, pattern):
+    while True:
+        user_input = input(prompt)
+        if re.match(pattern, user_input):
+            return user_input
+        else:
+            print("Wrong input. Please try again.\n")
 
-emails = re.findall(email_regex, text)
-urls = re.findall(url_regex, text)
-phones = re.findall(phone_regex, text)
-credit_cards = re.findall(credit_card_regex, text)
+# Main program
+email = get_valid_input("Enter your email address: ", email_pattern)
+phone = get_valid_input("Enter your phone number: ", phone_pattern)
+url = get_valid_input("Enter a website URL (starting with http or https): ", url_pattern)
 
-print("Emails:", emails)
-print("URLs:", urls)
-print("Phone Numbers:", phones)
-print("Credit Cards:", credit_cards)
+print("\nThank you! All inputs are valid.")
+
